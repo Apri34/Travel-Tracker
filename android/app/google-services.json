@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "136895599453",
+    "project_id": "travel-trackr",
+    "storage_bucket": "travel-trackr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136895599453:android:538a88986574a774c20eb4",
+        "android_client_info": {
+          "package_name": "com.app.traveltrackr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136895599453-0m9ni7010qdm25cgumrrqhsfk0utli61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Vsz-RETifIhbvgPeIfkupzx--vPaBGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136895599453-0m9ni7010qdm25cgumrrqhsfk0utli61.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "136895599453-lcd8eluhn3m1torg4u5a36p9qil9ophk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.traveltrackr.net.travelTrackr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
