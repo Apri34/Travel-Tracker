@@ -18,7 +18,12 @@ class TravelTrackr extends StatelessWidget {
       builder: (context, child) {
         return Theme(
           data: AppTheme.theme,
-          child: child!,
+          child: GestureDetector(
+            onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: child!,
+          ),
         );
       },
       debugShowCheckedModeBanner: false,

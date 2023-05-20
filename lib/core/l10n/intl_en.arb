@@ -1,1 +1,7 @@
-{}
+{
+  "city": "City",
+  "country": "Country",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "addDestination": "Add Destination"
+}
