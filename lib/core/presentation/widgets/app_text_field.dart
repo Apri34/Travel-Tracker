@@ -12,6 +12,8 @@ class AppTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final ValueChanged<String>? onChanged;
   final bool error;
+  final bool enabled;
+  final bool autofocus;
 
   const AppTextField({
     Key? key,
@@ -22,6 +24,8 @@ class AppTextField extends StatefulWidget {
     this.focusNode,
     this.onChanged,
     this.error = false,
+    this.enabled = true,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
@@ -103,6 +107,8 @@ class _AppTextFieldState extends State<AppTextField>
               errorText: widget.error ? '' : null,
               errorStyle: const TextStyle(height: 0),
             ),
+            enabled: widget.enabled,
+            autofocus: widget.autofocus,
           ),
         ),
         if (widget.hint != null)

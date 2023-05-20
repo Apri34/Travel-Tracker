@@ -12,6 +12,7 @@ class AppDatePickerField extends StatefulWidget {
   final DateFormat? format;
   final TextEditingController? controller;
   final bool error;
+  final bool enabled;
 
   const AppDatePickerField({
     Key? key,
@@ -21,7 +22,9 @@ class AppDatePickerField extends StatefulWidget {
     this.firstDate,
     this.lastDate,
     this.format,
-    this.controller,  this.error = false,
+    this.controller,
+    this.error = false,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -36,6 +39,7 @@ class _AppDatePickerFieldState extends State<AppDatePickerField> {
   Widget build(BuildContext context) {
     return AppTextField(
       error: widget.error,
+      enabled: widget.enabled,
       allowWrite: false,
       hint: widget.hint,
       controller: controller,

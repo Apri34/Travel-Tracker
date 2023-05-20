@@ -30,9 +30,19 @@ class AddDestinationScreen
         elevation: 0,
         title: Text(S.of(context).addDestination),
         actions: [
-          IconButton(
-            onPressed: context.read<AddDestinationCubit>().validateAndSave,
-            icon: const Icon(Icons.check),
+          BlocBuilder<AddDestinationCubit, AddDestinationState>(
+            builder: (context, state) => state.saving
+                ? const Center(
+                    child: SizedBox.square(
+                      dimension: 16.0,
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : IconButton(
+                    onPressed:
+                        context.read<AddDestinationCubit>().validateAndSave,
+                    icon: const Icon(Icons.check),
+                  ),
           ),
         ],
       ),
@@ -48,6 +58,7 @@ class AddDestinationScreen
                 onCountrySelected:
                     context.read<AddDestinationCubit>().setCountry,
                 error: state.countryError,
+                enabled: !state.saving,
               ),
               AnimatedCrossFade(
                 firstChild: const SizedBox.shrink(),
@@ -63,6 +74,7 @@ class AddDestinationScreen
                       controller:
                           context.read<AddDestinationCubit>().cityController,
                       error: state.cityError,
+                      enabled: !state.saving,
                     ),
                   ],
                 ),
@@ -79,6 +91,7 @@ class AddDestinationScreen
                 lastDate: state.endDate,
                 initialDate: state.startDate ?? state.endDate ?? DateTime.now(),
                 error: state.startDateError,
+                enabled: !state.saving,
               ),
               AnimatedCrossFade(
                 firstChild: const SizedBox.shrink(),
@@ -93,6 +106,7 @@ class AddDestinationScreen
                       firstDate: state.startDate,
                       initialDate:
                           state.endDate ?? state.startDate ?? DateTime.now(),
+                      enabled: !state.saving,
                     ),
                   ],
                 ),

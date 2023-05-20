@@ -79,6 +79,7 @@ class _CityPickerBottomsheetState extends State<CityPickerBottomsheet> {
               child: AppTextField(
                 hint: S.of(context).city,
                 onChanged: onChanged,
+                autofocus: true,
               ),
             ),
             20.0.verticalSpace,

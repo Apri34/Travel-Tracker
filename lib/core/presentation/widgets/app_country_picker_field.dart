@@ -10,6 +10,7 @@ class AppCountryPickerField extends StatefulWidget {
   final Function(Country country)? onCountrySelected;
   final TextEditingController? controller;
   final bool error;
+  final bool enabled;
 
   const AppCountryPickerField({
     Key? key,
@@ -17,6 +18,7 @@ class AppCountryPickerField extends StatefulWidget {
     this.onCountrySelected,
     this.controller,
     this.error = false,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -31,6 +33,7 @@ class _AppCountryPickerFieldState extends State<AppCountryPickerField> {
   Widget build(BuildContext context) {
     return AppTextField(
       error: widget.error,
+      enabled: widget.enabled,
       allowWrite: false,
       hint: widget.hint,
       controller: controller,

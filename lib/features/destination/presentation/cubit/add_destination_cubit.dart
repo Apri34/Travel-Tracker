@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:travel_trackr/core/data/api/firebase/firestore_api.dart';
 
 import '../../../../core/data/entities/destination_entity/destination_entity.dart';
 import '../../../../core/data/models/city/city.dart';
@@ -14,9 +15,10 @@ part 'add_destination_cubit.freezed.dart';
 
 @Injectable()
 class AddDestinationCubit extends Cubit<AddDestinationState> {
+  final FirestoreApi _api;
   final TextEditingController cityController = TextEditingController();
 
-  AddDestinationCubit() : super(const AddDestinationState());
+  AddDestinationCubit(this._api) : super(const AddDestinationState());
 
   void setCountry(Country country) {
     if (state.country?.name != country.name) {
@@ -65,17 +67,29 @@ class AddDestinationCubit extends Cubit<AddDestinationState> {
   }
 
   Future<void> save() async {
-    emit(
-      state.copyWith(
-        destination: DestinationEntity(
-          country: state.country!.name,
-          city: state.city!.name,
-          latitude: state.city!.latitude,
-          longitude: state.city!.longitude,
-          startDate: state.startDate!,
-          endDate: state.endDate,
-        ),
-      ),
+    var destination = DestinationEntity(
+      country: state.country!.name,
+      city: state.city!.name,
+      latitude: state.city!.latitude,
+      longitude: state.city!.longitude,
+      startDate: state.startDate!,
+      endDate: state.endDate,
     );
+    try {
+      emit(state.copyWith(
+        saving: true,
+        savingError: false,
+      ));
+      await _api.addDestination(destination);
+      emit(state.copyWith(
+        savingError: false,
+        destination: destination,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        saving: false,
+        savingError: true,
+      ));
+    }
   }
 }

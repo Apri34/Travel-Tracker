@@ -12,6 +12,8 @@ class AddDestinationState with _$AddDestinationState {
     @Default(false) bool cityError,
     @Default(false) bool startDateError,
     DestinationEntity? destination,
+    @Default(false) bool saving,
+    @Default(false) bool savingError,
   }) = _AddDestinationState;
 }
 
