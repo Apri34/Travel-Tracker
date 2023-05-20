@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_trackr/core/data/entities/destination_entity/destination_entity.dart';
 import 'package:travel_trackr/core/data/provider/device_id_provider.dart';
+import 'package:travel_trackr/core/di/injection.dart';
 
 @Injectable()
 class FirestoreApi {
@@ -14,14 +15,9 @@ class FirestoreApi {
   }
 }
 
-@Injectable()
-class FirestoreQueries {
-  final FirestoreReferences _references;
-
-  FirestoreQueries(this._references);
-
-  Query<DestinationEntity> get destinationsQuery => _references.destinations
-      .orderBy('start_date', descending: true)
+abstract class FirestoreQueries {
+  static Query<DestinationEntity> get destinationsQuery => getIt<FirestoreReferences>().destinations
+      .orderBy('startDate', descending: true)
       .withConverter<DestinationEntity>(
         fromFirestore: (snapshot, _) =>
             DestinationEntity.fromJson(snapshot.data()!),

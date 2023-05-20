@@ -9,4 +9,17 @@ abstract class AppTextTheme {
     fontSize: 16,
     color: Colors.white,
   );
+
+  /// Destination Country
+  static const TextStyle body = TextStyle(
+    color: Colors.white,
+    fontSize: 11,
+  );
+
+  /// Destination City
+  static const TextStyle headline2 = TextStyle(
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+  );
 }

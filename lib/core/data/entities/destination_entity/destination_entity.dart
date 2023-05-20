@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:travel_trackr/core/utils/date_format_utils.dart';
 
 import '../journey_entity/journey_entity.dart';
 import '../stay_entity/stay_entity.dart';
@@ -22,4 +23,14 @@ class DestinationEntity with _$DestinationEntity {
 
   factory DestinationEntity.fromJson(Map<String, Object?> json) =>
       _$DestinationEntityFromJson(json);
+}
+
+extension DestinationEntityExtension on DestinationEntity {
+  String get dateString {
+    var str = DateFormatUtils.standard.format(startDate);
+    if(endDate != null) {
+      str += " - ${DateFormatUtils.standard.format(endDate!)}";
+    }
+    return str;
+  }
 }

@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:travel_trackr/core/presentation/widgets/app_text_field.dart';
 import 'package:travel_trackr/core/presentation/widgets/picker/date_picker.dart';
 
+import '../../utils/date_format_utils.dart';
+
 class AppDatePickerField extends StatefulWidget {
   final String? hint;
   final Function(DateTime date)? onDateSelected;
@@ -57,7 +59,7 @@ class _AppDatePickerFieldState extends State<AppDatePickerField> {
             widget.onDateSelected!(date);
           }
           controller.text =
-              (widget.format ?? DateFormat("MMM dd, yyyy")).format(date);
+              (widget.format ?? DateFormatUtils.standard).format(date);
         }
       },
     );
