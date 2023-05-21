@@ -99,6 +99,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Add Flight`
+  String get addFlight {
+    return Intl.message(
+      'Add Flight',
+      name: 'addFlight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Stay`
+  String get addStay {
+    return Intl.message(
+      'Add Stay',
+      name: 'addStay',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

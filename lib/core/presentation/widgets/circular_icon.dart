@@ -33,7 +33,7 @@ class CircularIcon extends StatelessWidget {
 
 enum CircularIconSize { small, medium, big }
 
-extension on CircularIconSize {
+extension CircularIconSizeExtension on CircularIconSize {
   double get size {
     switch (this) {
       case CircularIconSize.small:
@@ -50,7 +50,7 @@ extension on CircularIconSize {
       case CircularIconSize.small:
         return 8;
       case CircularIconSize.medium:
-        return 7.5;
+        return 12;
       case CircularIconSize.big:
         return 16;
     }

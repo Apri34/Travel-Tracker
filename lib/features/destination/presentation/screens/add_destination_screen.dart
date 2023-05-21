@@ -10,6 +10,7 @@ import 'package:travel_trackr/features/destination/presentation/cubit/add_destin
 
 import '../../../../core/l10n/generated/l10n.dart';
 import '../../../../core/presentation/app_cubit_screen.dart';
+import '../../../../core/presentation/widgets/show_if.dart';
 
 @RoutePage()
 class AddDestinationScreen
@@ -60,9 +61,9 @@ class AddDestinationScreen
                 error: state.countryError,
                 enabled: !state.saving,
               ),
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: Column(
+              ShowIf(
+                show: state.country != null,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     25.0.verticalSpace,
@@ -78,10 +79,6 @@ class AddDestinationScreen
                     ),
                   ],
                 ),
-                crossFadeState: state.country != null
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 200),
               ),
               25.0.verticalSpace,
               AppDatePickerField(
@@ -93,9 +90,9 @@ class AddDestinationScreen
                 error: state.startDateError,
                 enabled: !state.saving,
               ),
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: Column(
+              ShowIf(
+                show: state.startDate != null,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     25.0.verticalSpace,
@@ -110,10 +107,6 @@ class AddDestinationScreen
                     ),
                   ],
                 ),
-                crossFadeState: state.startDate != null
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 200),
               ),
             ],
           ),

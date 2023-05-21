@@ -3,5 +3,7 @@
   "country": "Country",
   "startDate": "Start Date",
   "endDate": "End Date",
-  "addDestination": "Add Destination"
+  "addDestination": "Add Destination",
+  "addFlight": "Add Flight",
+  "addStay": "Add Stay"
 }
