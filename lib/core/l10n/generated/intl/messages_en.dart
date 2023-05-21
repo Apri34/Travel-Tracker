@@ -26,9 +26,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Add Destination"),
         "addFlight": MessageLookupByLibrary.simpleMessage("Add Flight"),
         "addStay": MessageLookupByLibrary.simpleMessage("Add Stay"),
+        "address": MessageLookupByLibrary.simpleMessage("Address"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
+        "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "country": MessageLookupByLibrary.simpleMessage("Country"),
         "endDate": MessageLookupByLibrary.simpleMessage("End Date"),
-        "startDate": MessageLookupByLibrary.simpleMessage("Start Date")
+        "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
+        "zip": MessageLookupByLibrary.simpleMessage("ZIP")
       };
 }

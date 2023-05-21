@@ -5,9 +5,9 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:travel_trackr/core/data/api/firebase/firestore_api.dart';
 
-import '../../../../core/data/entities/destination_entity/destination_entity.dart';
-import '../../../../core/data/models/city/city.dart';
-import '../../../../core/data/models/country/country.dart';
+import '../../../../../core/data/entities/destination_entity/destination_entity.dart';
+import '../../../../../core/data/models/city/city.dart';
+import '../../../../../core/data/models/country/country.dart';
 
 part 'add_destination_state.dart';
 

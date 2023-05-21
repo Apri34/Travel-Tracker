@@ -5,5 +5,8 @@
   "endDate": "End Date",
   "addDestination": "Add Destination",
   "addFlight": "Add Flight",
-  "addStay": "Add Stay"
+  "addStay": "Add Stay",
+  "address": "Address",
+  "comment": "Comment",
+  "zip": "ZIP"
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_trackr/core/data/entities/destination_entity/destination_entity.dart';
+import 'package:travel_trackr/core/data/entities/stay_entity/stay_entity.dart';
 import 'package:travel_trackr/core/data/provider/device_id_provider.dart';
 import 'package:travel_trackr/core/di/injection.dart';
 
@@ -13,16 +14,22 @@ class FirestoreApi {
   Future<void> addDestination(DestinationEntity destinationEntity) async {
     await _references.destinations.add(destinationEntity.toJson());
   }
+
+  Future<void> addStay(String destinationDocId, StayEntity stayEntity) async {
+    await _references.getStays(destinationDocId).add(stayEntity.toJson());
+  }
 }
 
 abstract class FirestoreQueries {
-  static Query<DestinationEntity> get destinationsQuery => getIt<FirestoreReferences>().destinations
-      .orderBy('startDate', descending: true)
-      .withConverter<DestinationEntity>(
-        fromFirestore: (snapshot, _) =>
-            DestinationEntity.fromJson(snapshot.data()!),
-        toFirestore: (destination, _) => destination.toJson(),
-      );
+  static Query<DestinationEntity> get destinationsQuery =>
+      getIt<FirestoreReferences>()
+          .destinations
+          .orderBy('startDate', descending: true)
+          .withConverter<DestinationEntity>(
+            fromFirestore: (snapshot, _) =>
+                DestinationEntity.fromJson(snapshot.data()!),
+            toFirestore: (destination, _) => destination.toJson(),
+          );
 }
 
 @Injectable()
@@ -34,6 +41,7 @@ class FirestoreReferences {
 
   static const _users = 'users';
   static const _destinations = 'destinations';
+  static const _stays = 'stays';
 
   CollectionReference get users => firestore.collection(_users);
 
@@ -43,4 +51,7 @@ class FirestoreReferences {
 
   DocumentReference getDestination(String destinationId) =>
       destinations.doc(destinationId);
+
+  CollectionReference getStays(String destinationId) =>
+      destinations.doc(destinationId).collection(_stays);
 }

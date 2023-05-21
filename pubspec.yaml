@@ -29,6 +29,7 @@ dependencies:
   fresh_dio: ^0.3.1
   pretty_dio_logger: ^1.1.1
   flutterfire_ui: ^0.4.3+20
+  geocoding: ^2.0.5
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_trackr/core/data/entities/destination_entity/destination_entity.dart';
+import 'package:travel_trackr/core/navigation/app_router.dart';
 import 'package:travel_trackr/core/presentation/widgets/show_if.dart';
 import 'package:travel_trackr/core/theme/app_text_theme.dart';
 import 'package:travel_trackr/core/utils/spacing.dart';
@@ -11,10 +13,12 @@ import '../../../../core/presentation/widgets/circular_icon.dart';
 
 class Destination extends StatelessWidget {
   final DestinationEntity destination;
+  final String destinationDocId;
   final bool editing;
 
   const Destination({
     Key? key,
+    required this.destinationDocId,
     required this.destination,
     this.editing = false,
   }) : super(key: key);
@@ -82,7 +86,7 @@ class Destination extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: (){},
+            onTap: () {},
           ),
         ),
         ShowIf(
@@ -107,7 +111,10 @@ class Destination extends StatelessWidget {
                     ),
                   ],
                 ),
-                onTap: (){},
+                onTap: () => context.router.push(AddStayRoute(
+                  destinationDocId: destinationDocId,
+                  country: destination.country,
+                )),
               ),
             ],
           ),

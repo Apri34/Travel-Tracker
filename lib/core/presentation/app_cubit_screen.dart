@@ -10,7 +10,11 @@ abstract class AppCubitScreen<Bloc extends BlocBase<State>, State>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<Bloc>(),
+      create: (_) {
+        var bloc = getIt<Bloc>();
+        init(bloc);
+        return bloc;
+      },
       child: _AppCubitScreenBody<Bloc, State>(
         b: builder,
         listener: listener,
@@ -21,6 +25,8 @@ abstract class AppCubitScreen<Bloc extends BlocBase<State>, State>
   Widget builder(BuildContext context);
 
   void listener(BuildContext context, State state) {}
+
+  void init(Bloc bloc) {}
 }
 
 class _AppCubitScreenBody<Bloc extends BlocBase<State>, State>

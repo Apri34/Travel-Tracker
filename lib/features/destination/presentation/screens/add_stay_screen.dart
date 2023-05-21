@@ -2,24 +2,35 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travel_trackr/core/presentation/widgets/app_city_picker_field.dart';
-import 'package:travel_trackr/core/presentation/widgets/app_country_picker_field.dart';
 import 'package:travel_trackr/core/presentation/widgets/app_date_picker_field.dart';
+import 'package:travel_trackr/core/presentation/widgets/app_text_field.dart';
 import 'package:travel_trackr/core/utils/spacing.dart';
-import 'package:travel_trackr/features/destination/presentation/cubit/add_destination/add_destination_cubit.dart';
+import 'package:travel_trackr/features/destination/presentation/cubit/add_stay/add_stay_cubit.dart';
 
+import '../../../../core/data/entities/destination_entity/destination_entity.dart';
 import '../../../../core/l10n/generated/l10n.dart';
 import '../../../../core/presentation/app_cubit_screen.dart';
 import '../../../../core/presentation/widgets/show_if.dart';
 
 @RoutePage()
-class AddDestinationScreen
-    extends AppCubitScreen<AddDestinationCubit, AddDestinationState> {
-  const AddDestinationScreen({super.key});
+class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
+  final String destinationDocId;
+  final String country;
+
+  const AddStayScreen({
+    super.key,
+    required this.destinationDocId,
+    required this.country,
+  });
 
   @override
-  void listener(BuildContext context, AddDestinationState state) {
-    if (state.destination != null) {
+  void init(AddStayCubit bloc) {
+    bloc.init(destinationDocId, country);
+  }
+
+  @override
+  void listener(BuildContext context, AddStayState state) {
+    if (state.stay != null) {
       context.router.pop();
     }
   }
@@ -29,9 +40,9 @@ class AddDestinationScreen
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(S.of(context).addDestination),
+        title: Text(S.of(context).addStay),
         actions: [
-          BlocBuilder<AddDestinationCubit, AddDestinationState>(
+          BlocBuilder<AddStayCubit, AddStayState>(
             builder: (context, state) => state.saving
                 ? const Center(
                     child: SizedBox.square(
@@ -40,8 +51,7 @@ class AddDestinationScreen
                     ),
                   )
                 : IconButton(
-                    onPressed:
-                        context.read<AddDestinationCubit>().validateAndSave,
+                    onPressed: context.read<AddStayCubit>().validateAndSave,
                     icon: const Icon(Icons.check),
                   ),
           ),
@@ -49,45 +59,45 @@ class AddDestinationScreen
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 44),
-        child: BlocBuilder<AddDestinationCubit, AddDestinationState>(
+        child: BlocBuilder<AddStayCubit, AddStayState>(
           builder: (context, state) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               50.0.verticalSpace,
-              AppCountryPickerField(
-                hint: S.of(context).country,
-                onCountrySelected:
-                    context.read<AddDestinationCubit>().setCountry,
-                error: state.countryError,
-                enabled: !state.saving,
-              ),
-              ShowIf(
-                show: state.country != null,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    25.0.verticalSpace,
-                    AppCityPickerField(
+              Row(
+                children: [
+                  Expanded(
+                    child: AppTextField(
+                      hint: S.of(context).zip,
+                      error: state.zipError,
+                      enabled: !state.saving,
+                      onChanged: context.read<AddStayCubit>().setZip,
+                    ),
+                  ),
+                  25.0.horizontalSpace,
+                  Expanded(
+                    child: AppTextField(
                       hint: S.of(context).city,
-                      onCitySelected:
-                          context.read<AddDestinationCubit>().setCity,
-                      country: state.country?.cca2,
-                      controller:
-                          context.read<AddDestinationCubit>().cityController,
                       error: state.cityError,
                       enabled: !state.saving,
+                      onChanged: context.read<AddStayCubit>().setCity,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+              25.0.verticalSpace,
+              AppTextField(
+                hint: S.of(context).address,
+                error: state.addressError,
+                enabled: !state.saving,
+                onChanged: context.read<AddStayCubit>().setAddress,
               ),
               25.0.verticalSpace,
               AppDatePickerField(
                 hint: S.of(context).startDate,
-                onDateSelected:
-                    context.read<AddDestinationCubit>().setStartDate,
+                onDateSelected: context.read<AddStayCubit>().setStartDate,
                 lastDate: state.endDate,
                 initialDate: state.startDate ?? state.endDate ?? DateTime.now(),
-                error: state.startDateError,
                 enabled: !state.saving,
               ),
               ShowIf(
@@ -98,8 +108,7 @@ class AddDestinationScreen
                     25.0.verticalSpace,
                     AppDatePickerField(
                       hint: S.of(context).endDate,
-                      onDateSelected:
-                          context.read<AddDestinationCubit>().setEndDate,
+                      onDateSelected: context.read<AddStayCubit>().setEndDate,
                       firstDate: state.startDate,
                       initialDate:
                           state.endDate ?? state.startDate ?? DateTime.now(),
@@ -107,6 +116,12 @@ class AddDestinationScreen
                     ),
                   ],
                 ),
+              ),
+              25.0.verticalSpace,
+              AppTextField(
+                hint: S.of(context).comment,
+                enabled: !state.saving,
+                onChanged: context.read<AddStayCubit>().setComment,
               ),
             ],
           ),

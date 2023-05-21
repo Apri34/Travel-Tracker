@@ -33,6 +33,7 @@ class HomeScreen extends AppCubitScreen<HomeCubit, HomeState> {
             return BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) => Destination(
                 destination: doc.data(),
+                destinationDocId: doc.id,
                 editing: state.editing,
               ),
             );
