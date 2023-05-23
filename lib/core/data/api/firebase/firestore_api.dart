@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:travel_trackr/core/data/entities/destination_entity/destination_entity.dart';
+import 'package:travel_trackr/core/data/entities/journey_entity/journey_entity.dart';
 import 'package:travel_trackr/core/data/entities/stay_entity/stay_entity.dart';
 import 'package:travel_trackr/core/data/provider/device_id_provider.dart';
 import 'package:travel_trackr/core/di/injection.dart';
@@ -28,8 +29,28 @@ abstract class FirestoreQueries {
           .withConverter<DestinationEntity>(
             fromFirestore: (snapshot, _) =>
                 DestinationEntity.fromJson(snapshot.data()!),
-            toFirestore: (destination, _) => destination.toJson(),
+            toFirestore: (e, _) => e.toJson(),
           );
+
+  static Query<StayEntity> getStaysQuery(String destinationDocId) =>
+      getIt<FirestoreReferences>()
+          .getStays(destinationDocId)
+          .orderBy('startDate')
+          .withConverter<StayEntity>(
+        fromFirestore: (snapshot, _) =>
+            StayEntity.fromJson(snapshot.data()!),
+        toFirestore: (e, _) => e.toJson(),
+      );
+
+  static Query<JourneyEntity> getJourneysQuery(String destinationDocId) =>
+      getIt<FirestoreReferences>()
+          .getJourneys(destinationDocId)
+          .orderBy('startDate')
+          .withConverter<JourneyEntity>(
+        fromFirestore: (snapshot, _) =>
+            JourneyEntity.fromJson(snapshot.data()!),
+        toFirestore: (e, _) => e.toJson(),
+      );
 }
 
 @Injectable()
@@ -42,6 +63,7 @@ class FirestoreReferences {
   static const _users = 'users';
   static const _destinations = 'destinations';
   static const _stays = 'stays';
+  static const _journeys = 'journeys';
 
   CollectionReference get users => firestore.collection(_users);
 
@@ -54,4 +76,7 @@ class FirestoreReferences {
 
   CollectionReference getStays(String destinationId) =>
       destinations.doc(destinationId).collection(_stays);
+
+  CollectionReference getJourneys(String destinationId) =>
+      destinations.doc(destinationId).collection(_journeys);
 }

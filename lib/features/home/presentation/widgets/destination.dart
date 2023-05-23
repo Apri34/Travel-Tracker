@@ -1,7 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/firestore.dart';
+import 'package:travel_trackr/core/data/api/firebase/firestore_api.dart';
 import 'package:travel_trackr/core/data/entities/destination_entity/destination_entity.dart';
+import 'package:travel_trackr/core/data/entities/journey_entity/journey_entity.dart';
+import 'package:travel_trackr/core/data/entities/stay_entity/stay_entity.dart';
 import 'package:travel_trackr/core/navigation/app_router.dart';
 import 'package:travel_trackr/core/presentation/widgets/show_if.dart';
 import 'package:travel_trackr/core/theme/app_text_theme.dart';
@@ -67,6 +71,21 @@ class Destination extends StatelessWidget {
       ),
       children: [
         2.0.verticalSpace,
+        FirestoreQueryBuilder<JourneyEntity>(
+          query: FirestoreQueries.getJourneysQuery(destinationDocId),
+          builder: (context, snapshot, _) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: snapshot.docs
+                .map((e) => MediumDestinationItem(
+              icon: Icons.airplanemode_on,
+              trailing: Text(
+                e.data().description ?? "",
+                style: AppTextTheme.body,
+              ),
+            ))
+                .toList(),
+          ),
+        ),
         ShowIf(
           show: editing,
           child: MediumDestinationItem(
@@ -87,6 +106,21 @@ class Destination extends StatelessWidget {
               ],
             ),
             onTap: () {},
+          ),
+        ),
+        FirestoreQueryBuilder<StayEntity>(
+          query: FirestoreQueries.getStaysQuery(destinationDocId),
+          builder: (context, snapshot, _) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: snapshot.docs
+                .map((e) => MediumDestinationItem(
+                      icon: Icons.home,
+                      trailing: Text(
+                        e.data().address,
+                        style: AppTextTheme.body,
+                      ),
+                    ))
+                .toList(),
           ),
         ),
         ShowIf(
