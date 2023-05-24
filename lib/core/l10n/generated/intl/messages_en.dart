@@ -24,14 +24,20 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addDestination":
             MessageLookupByLibrary.simpleMessage("Add Destination"),
-        "addFlight": MessageLookupByLibrary.simpleMessage("Add Flight"),
+        "addJourney": MessageLookupByLibrary.simpleMessage("Add Journey"),
         "addStay": MessageLookupByLibrary.simpleMessage("Add Stay"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "bus": MessageLookupByLibrary.simpleMessage("Bus"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "country": MessageLookupByLibrary.simpleMessage("Country"),
         "endDate": MessageLookupByLibrary.simpleMessage("End Date"),
+        "flight": MessageLookupByLibrary.simpleMessage("Flight"),
+        "from": MessageLookupByLibrary.simpleMessage("From"),
+        "journeyType": MessageLookupByLibrary.simpleMessage("Travel type"),
         "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
+        "to": MessageLookupByLibrary.simpleMessage("To"),
+        "train": MessageLookupByLibrary.simpleMessage("Train"),
         "zip": MessageLookupByLibrary.simpleMessage("ZIP")
       };
 }

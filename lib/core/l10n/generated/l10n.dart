@@ -100,16 +100,6 @@ class S {
     );
   }
 
-  /// `Add Flight`
-  String get addFlight {
-    return Intl.message(
-      'Add Flight',
-      name: 'addFlight',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Add Stay`
   String get addStay {
     return Intl.message(
@@ -145,6 +135,76 @@ class S {
     return Intl.message(
       'ZIP',
       name: 'zip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bus`
+  String get bus {
+    return Intl.message(
+      'Bus',
+      name: 'bus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Train`
+  String get train {
+    return Intl.message(
+      'Train',
+      name: 'train',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flight`
+  String get flight {
+    return Intl.message(
+      'Flight',
+      name: 'flight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Journey`
+  String get addJourney {
+    return Intl.message(
+      'Add Journey',
+      name: 'addJourney',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Travel type`
+  String get journeyType {
+    return Intl.message(
+      'Travel type',
+      name: 'journeyType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get from {
+    return Intl.message(
+      'From',
+      name: 'from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To`
+  String get to {
+    return Intl.message(
+      'To',
+      name: 'to',
       desc: '',
       args: [],
     );

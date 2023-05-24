@@ -4,9 +4,15 @@
   "startDate": "Start Date",
   "endDate": "End Date",
   "addDestination": "Add Destination",
-  "addFlight": "Add Flight",
   "addStay": "Add Stay",
   "address": "Address",
   "comment": "Comment",
-  "zip": "ZIP"
+  "zip": "ZIP",
+  "bus": "Bus",
+  "train": "Train",
+  "flight": "Flight",
+  "addJourney": "Add Journey",
+  "journeyType": "Travel type",
+  "from": "From",
+  "to": "To"
 }

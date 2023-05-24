@@ -22,4 +22,10 @@ abstract class AppTextTheme {
     fontSize: 14,
     fontWeight: FontWeight.w700,
   );
+
+  static const TextStyle dropdown = TextStyle(
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+  );
 }

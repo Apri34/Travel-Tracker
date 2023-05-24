@@ -20,8 +20,15 @@ class FirestoreApi {
     await _references.getStays(destinationDocId).add(stayEntity.toJson());
   }
 
+  Future<void> addJourney(
+      String destinationDocId, JourneyEntity journeyEntity) async {
+    await _references.getJourneys(destinationDocId).add(journeyEntity.toJson());
+  }
+
   Stream<List<QueryDocumentSnapshot<DestinationEntity>>> getDestinations() {
-     return FirestoreQueries.destinationsQuery.snapshots().map((event) => event.docs);
+    return FirestoreQueries.destinationsQuery
+        .snapshots()
+        .map((event) => event.docs);
   }
 }
 

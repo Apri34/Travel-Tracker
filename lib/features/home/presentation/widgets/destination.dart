@@ -119,7 +119,7 @@ class Destination extends StatelessWidget {
                     .map((e) => MediumDestinationItem(
                           icon: Icons.airplanemode_on,
                           trailing: Text(
-                            e.data().description ?? "",
+                            "${e.data().from} - ${e.data().to}",
                             style: AppTextTheme.body,
                           ),
                         ))
@@ -140,12 +140,14 @@ class Destination extends StatelessWidget {
                     ),
                     4.0.horizontalSpace,
                     Text(
-                      S.of(context).addFlight,
+                      S.of(context).addJourney,
                       style: AppTextTheme.body,
                     ),
                   ],
                 ),
-                onTap: () {},
+                onTap: () => context.router.push(AddJourneyRoute(
+                  destinationDocId: destinationDocId,
+                )),
               ),
             ),
             FirestoreQueryBuilder<StayEntity>(
