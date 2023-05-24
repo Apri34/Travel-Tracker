@@ -19,6 +19,10 @@ class FirestoreApi {
   Future<void> addStay(String destinationDocId, StayEntity stayEntity) async {
     await _references.getStays(destinationDocId).add(stayEntity.toJson());
   }
+
+  Stream<List<QueryDocumentSnapshot<DestinationEntity>>> getDestinations() {
+     return FirestoreQueries.destinationsQuery.snapshots().map((event) => event.docs);
+  }
 }
 
 abstract class FirestoreQueries {
@@ -37,20 +41,20 @@ abstract class FirestoreQueries {
           .getStays(destinationDocId)
           .orderBy('startDate')
           .withConverter<StayEntity>(
-        fromFirestore: (snapshot, _) =>
-            StayEntity.fromJson(snapshot.data()!),
-        toFirestore: (e, _) => e.toJson(),
-      );
+            fromFirestore: (snapshot, _) =>
+                StayEntity.fromJson(snapshot.data()!),
+            toFirestore: (e, _) => e.toJson(),
+          );
 
   static Query<JourneyEntity> getJourneysQuery(String destinationDocId) =>
       getIt<FirestoreReferences>()
           .getJourneys(destinationDocId)
           .orderBy('startDate')
           .withConverter<JourneyEntity>(
-        fromFirestore: (snapshot, _) =>
-            JourneyEntity.fromJson(snapshot.data()!),
-        toFirestore: (e, _) => e.toJson(),
-      );
+            fromFirestore: (snapshot, _) =>
+                JourneyEntity.fromJson(snapshot.data()!),
+            toFirestore: (e, _) => e.toJson(),
+          );
 }
 
 @Injectable()

@@ -14,122 +14,122 @@ import 'package:travel_trackr/features/home/presentation/widgets/medium_destinat
 
 import '../../../../core/l10n/generated/l10n.dart';
 import '../../../../core/presentation/widgets/circular_icon.dart';
+import '../../../../core/theme/app_colors.dart';
 
 class Destination extends StatelessWidget {
   final DestinationEntity destination;
   final String destinationDocId;
   final bool editing;
+  final bool first;
+  final bool last;
 
   const Destination({
     Key? key,
     required this.destinationDocId,
     required this.destination,
     this.editing = false,
+    this.first = false,
+    this.last = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      tilePadding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        //vertical: 6.0,
-      ),
-      collapsedIconColor: Colors.white,
-      iconColor: Colors.white,
-      title: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: AutoSizeText(
-              destination.dateString,
-              style: AppTextTheme.body,
-            ),
-          ),
-          16.0.horizontalSpace,
-          const CircularIcon(
-            icon: Icons.location_on,
-          ),
-          16.0.horizontalSpace,
-          Expanded(
-            flex: 8,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  destination.city,
-                  style: AppTextTheme.headline2,
-                ),
-                Text(
-                  destination.country,
-                  style: AppTextTheme.body,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return Stack(
       children: [
-        2.0.verticalSpace,
-        FirestoreQueryBuilder<JourneyEntity>(
-          query: FirestoreQueries.getJourneysQuery(destinationDocId),
-          builder: (context, snapshot, _) => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: snapshot.docs
-                .map((e) => MediumDestinationItem(
-              icon: Icons.airplanemode_on,
-              trailing: Text(
-                e.data().description ?? "",
-                style: AppTextTheme.body,
-              ),
-            ))
-                .toList(),
-          ),
-        ),
-        ShowIf(
-          show: editing,
-          child: MediumDestinationItem(
-            icon: Icons.airplanemode_on,
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
+        Positioned.fill(
+          top: first ? 16 : 0,
+          bottom: last ? 16 : 0,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 56.0,
+            ),
+            child: Row(
               children: [
-                const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 12,
+                const Expanded(
+                  flex: 3,
+                  child: SizedBox.shrink(),
                 ),
-                4.0.horizontalSpace,
-                Text(
-                  S.of(context).addFlight,
-                  style: AppTextTheme.body,
+                16.0.horizontalSpace,
+                SizedBox(
+                  width: CircularIconSize.big.size,
+                  child: Center(
+                    child: Container(
+                      width: 3,
+                      color: AppColors.primaryColor,
+                    ),
+                  ),
+                ),
+                16.0.horizontalSpace,
+                const Expanded(
+                  flex: 8,
+                  child: SizedBox.shrink(),
                 ),
               ],
             ),
-            onTap: () {},
           ),
         ),
-        FirestoreQueryBuilder<StayEntity>(
-          query: FirestoreQueries.getStaysQuery(destinationDocId),
-          builder: (context, snapshot, _) => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: snapshot.docs
-                .map((e) => MediumDestinationItem(
-                      icon: Icons.home,
-                      trailing: Text(
-                        e.data().address,
-                        style: AppTextTheme.body,
-                      ),
-                    ))
-                .toList(),
+        ExpansionTile(
+          tilePadding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            //vertical: 6.0,
           ),
-        ),
-        ShowIf(
-          show: editing,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          collapsedIconColor: Colors.white,
+          iconColor: Colors.white,
+          title: Row(
             children: [
-              MediumDestinationItem(
-                icon: Icons.home,
+              Expanded(
+                flex: 3,
+                child: AutoSizeText(
+                  destination.dateString,
+                  style: AppTextTheme.body,
+                ),
+              ),
+              16.0.horizontalSpace,
+              const CircularIcon(
+                icon: Icons.location_on,
+              ),
+              16.0.horizontalSpace,
+              Expanded(
+                flex: 8,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      destination.city,
+                      style: AppTextTheme.headline2,
+                    ),
+                    Text(
+                      destination.country,
+                      style: AppTextTheme.body,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          children: [
+            2.0.verticalSpace,
+            FirestoreQueryBuilder<JourneyEntity>(
+              query: FirestoreQueries.getJourneysQuery(destinationDocId),
+              builder: (context, snapshot, _) => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: snapshot.docs
+                    .map((e) => MediumDestinationItem(
+                          icon: Icons.airplanemode_on,
+                          trailing: Text(
+                            e.data().description ?? "",
+                            style: AppTextTheme.body,
+                          ),
+                        ))
+                    .toList(),
+              ),
+            ),
+            ShowIf(
+              show: editing,
+              child: MediumDestinationItem(
+                icon: Icons.airplanemode_on,
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -140,20 +140,62 @@ class Destination extends StatelessWidget {
                     ),
                     4.0.horizontalSpace,
                     Text(
-                      S.of(context).addStay,
+                      S.of(context).addFlight,
                       style: AppTextTheme.body,
                     ),
                   ],
                 ),
-                onTap: () => context.router.push(AddStayRoute(
-                  destinationDocId: destinationDocId,
-                  country: destination.country,
-                )),
+                onTap: () {},
               ),
-            ],
-          ),
+            ),
+            FirestoreQueryBuilder<StayEntity>(
+              query: FirestoreQueries.getStaysQuery(destinationDocId),
+              builder: (context, snapshot, _) => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: snapshot.docs
+                    .map((e) => MediumDestinationItem(
+                          icon: Icons.home,
+                          trailing: Text(
+                            e.data().address,
+                            style: AppTextTheme.body,
+                          ),
+                        ))
+                    .toList(),
+              ),
+            ),
+            ShowIf(
+              show: editing,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  MediumDestinationItem(
+                    icon: Icons.home,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 12,
+                        ),
+                        4.0.horizontalSpace,
+                        Text(
+                          S.of(context).addStay,
+                          style: AppTextTheme.body,
+                        ),
+                      ],
+                    ),
+                    onTap: () => context.router.push(AddStayRoute(
+                      destinationDocId: destinationDocId,
+                      country: destination.country,
+                    )),
+                  ),
+                ],
+              ),
+            ),
+            2.0.verticalSpace,
+          ],
         ),
-        2.0.verticalSpace,
       ],
     );
   }

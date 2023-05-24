@@ -5,5 +5,6 @@ part of 'home_cubit.dart';
 class HomeState with _$HomeState {
   const factory HomeState({
     @Default(false) bool editing,
+    @Default([]) List<QueryDocumentSnapshot<DestinationEntity>> destinations,
   }) = _HomeState;
 }
