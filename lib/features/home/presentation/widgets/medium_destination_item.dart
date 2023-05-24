@@ -8,6 +8,7 @@ class MediumDestinationItem extends StatelessWidget {
   final Widget? leading;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
 
   const MediumDestinationItem({
     Key? key,
@@ -15,6 +16,7 @@ class MediumDestinationItem extends StatelessWidget {
     this.leading,
     this.trailing,
     this.onTap,
+    this.onDelete,
   }) : super(key: key);
 
   @override
@@ -44,7 +46,22 @@ class MediumDestinationItem extends StatelessWidget {
             8.0.horizontalSpace,
             Expanded(
               flex: 8,
-              child: trailing ?? const SizedBox.shrink(),
+              child: Row(
+                children: [
+                  if (onDelete != null) ...[
+                    GestureDetector(
+                      onTap: onDelete,
+                      child: const Icon(
+                        Icons.delete_outline,
+                        size: 16.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    4.0.horizontalSpace,
+                  ],
+                  Expanded(child: trailing ?? const SizedBox.shrink()),
+                ],
+              ),
             ),
             ((CircularIconSize.big.size - CircularIconSize.medium.size) / 2)
                 .horizontalSpace,

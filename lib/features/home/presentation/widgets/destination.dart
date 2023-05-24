@@ -92,17 +92,32 @@ class Destination extends StatelessWidget {
               16.0.horizontalSpace,
               Expanded(
                 flex: 8,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
-                    Text(
-                      destination.city,
-                      style: AppTextTheme.headline2,
-                    ),
-                    Text(
-                      destination.country,
-                      style: AppTextTheme.body,
+                    if (editing) ...[
+                      GestureDetector(
+                        onTap: () {
+                          print("DELETE");
+                        },
+                        child: const Icon(Icons.delete_outline),
+                      ),
+                      8.0.horizontalSpace,
+                    ],
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            destination.city,
+                            style: AppTextTheme.headline2,
+                          ),
+                          Text(
+                            destination.country,
+                            style: AppTextTheme.body,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -118,6 +133,16 @@ class Destination extends StatelessWidget {
                 children: snapshot.docs
                     .map((e) => MediumDestinationItem(
                           icon: Icons.airplanemode_on,
+                          onDelete: editing
+                              ? () {
+                                  print("DELETE");
+                                }
+                              : null,
+                          onTap: editing
+                              ? () {
+                                  print("EDIT");
+                                }
+                              : null,
                           trailing: Text(
                             "${e.data().from} - ${e.data().to}",
                             style: AppTextTheme.body,
@@ -161,6 +186,8 @@ class Destination extends StatelessWidget {
                             e.data().address,
                             style: AppTextTheme.body,
                           ),
+                          onDelete: editing ? () {} : null,
+                          onTap: editing ? () {} : null,
                         ))
                     .toList(),
               ),
