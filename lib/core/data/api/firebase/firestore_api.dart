@@ -16,13 +16,26 @@ class FirestoreApi {
     await _references.destinations.add(destinationEntity.toJson());
   }
 
+  Future<void> deleteDestination(String destinationDocId) async {
+    await _references.getDestination(destinationDocId).delete();
+  }
+
   Future<void> addStay(String destinationDocId, StayEntity stayEntity) async {
     await _references.getStays(destinationDocId).add(stayEntity.toJson());
+  }
+
+  Future<void> deleteStay(String destinationDocId, String stayDocId) async {
+    await _references.getStay(destinationDocId, stayDocId).delete();
   }
 
   Future<void> addJourney(
       String destinationDocId, JourneyEntity journeyEntity) async {
     await _references.getJourneys(destinationDocId).add(journeyEntity.toJson());
+  }
+
+  Future<void> deleteJourney(
+      String destinationDocId, String journeyDocId) async {
+    await _references.getJourney(destinationDocId, journeyDocId).delete();
   }
 
   Stream<List<QueryDocumentSnapshot<DestinationEntity>>> getDestinations() {
@@ -88,6 +101,12 @@ class FirestoreReferences {
   CollectionReference getStays(String destinationId) =>
       destinations.doc(destinationId).collection(_stays);
 
+  DocumentReference getStay(String destinationId, String stayId) =>
+      getStays(destinationId).doc(stayId);
+
   CollectionReference getJourneys(String destinationId) =>
       destinations.doc(destinationId).collection(_journeys);
+
+  DocumentReference getJourney(String destinationId, String journeyId) =>
+      getJourneys(destinationId).doc(journeyId);
 }

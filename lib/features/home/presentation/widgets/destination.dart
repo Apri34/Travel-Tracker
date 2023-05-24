@@ -7,6 +7,7 @@ import 'package:travel_trackr/core/data/entities/destination_entity/destination_
 import 'package:travel_trackr/core/data/entities/journey_entity/journey_entity.dart';
 import 'package:travel_trackr/core/data/entities/stay_entity/stay_entity.dart';
 import 'package:travel_trackr/core/navigation/app_router.dart';
+import 'package:travel_trackr/core/presentation/dialogs/confirm_dialog.dart';
 import 'package:travel_trackr/core/presentation/widgets/show_if.dart';
 import 'package:travel_trackr/core/theme/app_text_theme.dart';
 import 'package:travel_trackr/core/utils/spacing.dart';
@@ -22,6 +23,9 @@ class Destination extends StatelessWidget {
   final bool editing;
   final bool first;
   final bool last;
+  final VoidCallback? onDeleteDestination;
+  final void Function(String journeyId)? onDeleteJourney;
+  final void Function(String stayId)? onDeleteStay;
 
   const Destination({
     Key? key,
@@ -30,6 +34,9 @@ class Destination extends StatelessWidget {
     this.editing = false,
     this.first = false,
     this.last = false,
+    this.onDeleteJourney,
+    this.onDeleteStay,
+    this.onDeleteDestination,
   }) : super(key: key);
 
   @override
@@ -82,7 +89,7 @@ class Destination extends StatelessWidget {
                 flex: 3,
                 child: AutoSizeText(
                   destination.dateString,
-                  style: AppTextTheme.body,
+                  style: AppTextTheme.bodySmall,
                 ),
               ),
               16.0.horizontalSpace,
@@ -94,11 +101,14 @@ class Destination extends StatelessWidget {
                 flex: 8,
                 child: Row(
                   children: [
-                    if (editing) ...[
+                    if (editing && onDeleteDestination != null) ...[
                       GestureDetector(
-                        onTap: () {
-                          print("DELETE");
-                        },
+                        onTap: () => confirm(
+                          context,
+                          S.of(context).deleteDestinationTitle,
+                          S.of(context).deleteDestinationDescription,
+                          onDeleteDestination!,
+                        ),
                         child: const Icon(Icons.delete_outline),
                       ),
                       8.0.horizontalSpace,
@@ -114,7 +124,7 @@ class Destination extends StatelessWidget {
                           ),
                           Text(
                             destination.country,
-                            style: AppTextTheme.body,
+                            style: AppTextTheme.bodySmall,
                           ),
                         ],
                       ),
@@ -133,9 +143,16 @@ class Destination extends StatelessWidget {
                 children: snapshot.docs
                     .map((e) => MediumDestinationItem(
                           icon: Icons.airplanemode_on,
-                          onDelete: editing
+                          onDelete: editing && onDeleteJourney != null
                               ? () {
-                                  print("DELETE");
+                                  confirm(
+                                    context,
+                                    S.of(context).deleteJourneyTitle,
+                                    S.of(context).deleteJourneyDescription,
+                                    () {
+                                      onDeleteJourney!(e.id);
+                                    },
+                                  );
                                 }
                               : null,
                           onTap: editing
@@ -145,7 +162,7 @@ class Destination extends StatelessWidget {
                               : null,
                           trailing: Text(
                             "${e.data().from} - ${e.data().to}",
-                            style: AppTextTheme.body,
+                            style: AppTextTheme.bodySmall,
                           ),
                         ))
                     .toList(),
@@ -166,7 +183,7 @@ class Destination extends StatelessWidget {
                     4.0.horizontalSpace,
                     Text(
                       S.of(context).addJourney,
-                      style: AppTextTheme.body,
+                      style: AppTextTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -184,9 +201,20 @@ class Destination extends StatelessWidget {
                           icon: Icons.home,
                           trailing: Text(
                             e.data().address,
-                            style: AppTextTheme.body,
+                            style: AppTextTheme.bodySmall,
                           ),
-                          onDelete: editing ? () {} : null,
+                          onDelete: editing && onDeleteStay != null
+                              ? () {
+                                  confirm(
+                                    context,
+                                    S.of(context).deleteStayTitle,
+                                    S.of(context).deleteStayDescription,
+                                    () {
+                                      onDeleteStay!(e.id);
+                                    },
+                                  );
+                                }
+                              : null,
                           onTap: editing ? () {} : null,
                         ))
                     .toList(),
@@ -210,7 +238,7 @@ class Destination extends StatelessWidget {
                         4.0.horizontalSpace,
                         Text(
                           S.of(context).addStay,
-                          style: AppTextTheme.body,
+                          style: AppTextTheme.bodySmall,
                         ),
                       ],
                     ),

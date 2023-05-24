@@ -209,6 +209,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Okay`
+  String get okay {
+    return Intl.message(
+      'Okay',
+      name: 'okay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Journey`
+  String get deleteJourneyTitle {
+    return Intl.message(
+      'Delete Journey',
+      name: 'deleteJourneyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you really want to delete this journey?`
+  String get deleteJourneyDescription {
+    return Intl.message(
+      'Do you really want to delete this journey?',
+      name: 'deleteJourneyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Destination`
+  String get deleteDestinationTitle {
+    return Intl.message(
+      'Delete Destination',
+      name: 'deleteDestinationTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you really want to delete this destination?`
+  String get deleteDestinationDescription {
+    return Intl.message(
+      'Do you really want to delete this destination?',
+      name: 'deleteDestinationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Stay`
+  String get deleteStayTitle {
+    return Intl.message(
+      'Delete Stay',
+      name: 'deleteStayTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you really want to delete this stay?`
+  String get deleteStayDescription {
+    return Intl.message(
+      'Do you really want to delete this stay?',
+      name: 'deleteStayDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create your first destination now!`
+  String get emptyDestinationsPlaceholder {
+    return Intl.message(
+      'Create your first destination now!',
+      name: 'emptyDestinationsPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

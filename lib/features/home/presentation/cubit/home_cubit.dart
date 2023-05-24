@@ -27,7 +27,23 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> fetchDestinations() async {
     _api.getDestinations().listen((destinations) {
-      emit(state.copyWith(destinations: destinations));
+      emit(state.copyWith(
+        destinations: destinations,
+        loaded: true,
+      ));
     });
+  }
+
+  Future<void> deleteDestination(String destinationDocId) async {
+    await _api.deleteDestination(destinationDocId);
+  }
+
+  Future<void> deleteStay(String destinationDocId, String stayDocId) async {
+    await _api.deleteStay(destinationDocId, stayDocId);
+  }
+
+  Future<void> deleteJourney(
+      String destinationDocId, String journeyDocId) async {
+    await _api.deleteJourney(destinationDocId, journeyDocId);
   }
 }

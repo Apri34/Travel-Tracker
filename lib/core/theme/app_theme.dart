@@ -24,6 +24,7 @@ abstract class AppTheme {
               const EdgeInsets.symmetric(vertical: 16.0, horizontal: 25.0),
         ),
         textTheme: const TextTheme(titleMedium: AppTextTheme.textFieldStyle),
+        elevatedButtonTheme: elevatedButtonTheme,
       );
 
   static ThemeData get datePickerTheme => ThemeData(
@@ -47,4 +48,15 @@ abstract class AppTheme {
           color: AppColors.errorBorderColor,
         ),
       );
+
+  static final ElevatedButtonThemeData elevatedButtonTheme =
+      ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      backgroundColor: AppColors.primaryColor,
+      foregroundColor: Colors.white,
+    ),
+  );
 }

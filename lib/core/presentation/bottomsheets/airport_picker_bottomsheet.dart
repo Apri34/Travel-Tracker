@@ -94,7 +94,7 @@ class _AirportPickerBottomsheetState extends State<AirportPickerBottomsheet> {
                             : loadedAirports[index - (loading ? 1 : 0)].city),
                         subtitle: Text(
                           loadedAirports[index - (loading ? 1 : 0)].name,
-                          style: AppTextTheme.body,
+                          style: AppTextTheme.bodySmall,
                         ),
                         onTap: () {
                           Navigator.pop(context);

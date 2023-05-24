@@ -14,5 +14,14 @@
   "addJourney": "Add Journey",
   "journeyType": "Travel type",
   "from": "From",
-  "to": "To"
+  "to": "To",
+  "cancel": "Cancel",
+  "okay": "Okay",
+  "deleteJourneyTitle": "Delete Journey",
+  "deleteJourneyDescription": "Do you really want to delete this journey?",
+  "deleteDestinationTitle": "Delete Destination",
+  "deleteDestinationDescription": "Do you really want to delete this destination?",
+  "deleteStayTitle": "Delete Stay",
+  "deleteStayDescription": "Do you really want to delete this stay?",
+  "emptyDestinationsPlaceholder": "Create your first destination now!"
 }

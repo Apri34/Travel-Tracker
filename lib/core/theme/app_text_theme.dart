@@ -10,10 +10,23 @@ abstract class AppTextTheme {
     color: Colors.white,
   );
 
-  /// Destination Country
+  /// HomeScreen placeholder description
   static const TextStyle body = TextStyle(
     color: Colors.white,
+    fontSize: 16,
+  );
+
+  /// Destination Country
+  static const TextStyle bodySmall = TextStyle(
+    color: Colors.white,
     fontSize: 11,
+  );
+
+  /// Dialog
+  static const TextStyle headline = TextStyle(
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
   );
 
   /// Destination City
