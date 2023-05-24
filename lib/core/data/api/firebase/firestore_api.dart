@@ -16,12 +16,26 @@ class FirestoreApi {
     await _references.destinations.add(destinationEntity.toJson());
   }
 
+  Future<void> updateDestination(
+      String destinationDocId, DestinationEntity destinationEntity) async {
+    await _references
+        .getDestination(destinationDocId)
+        .set(destinationEntity.toJson());
+  }
+
   Future<void> deleteDestination(String destinationDocId) async {
     await _references.getDestination(destinationDocId).delete();
   }
 
   Future<void> addStay(String destinationDocId, StayEntity stayEntity) async {
     await _references.getStays(destinationDocId).add(stayEntity.toJson());
+  }
+
+  Future<void> updateStay(
+      String destinationDocId, String stayDocId, StayEntity stayEntity) async {
+    await _references
+        .getStay(destinationDocId, stayDocId)
+        .set(stayEntity.toJson());
   }
 
   Future<void> deleteStay(String destinationDocId, String stayDocId) async {
@@ -31,6 +45,13 @@ class FirestoreApi {
   Future<void> addJourney(
       String destinationDocId, JourneyEntity journeyEntity) async {
     await _references.getJourneys(destinationDocId).add(journeyEntity.toJson());
+  }
+
+  Future<void> updateJourney(String destinationDocId, String journeyDocId,
+      JourneyEntity journeyEntity) async {
+    await _references
+        .getJourney(destinationDocId, journeyDocId)
+        .set(journeyEntity.toJson());
   }
 
   Future<void> deleteJourney(

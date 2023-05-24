@@ -4,10 +4,14 @@ part of 'add_destination_cubit.dart';
 @freezed
 class AddDestinationState with _$AddDestinationState {
   const factory AddDestinationState({
-    Country? country,
+    String? destinationDocId,
+    @Default('') String country,
+    @Default('') String countryCode,
     DateTime? startDate,
     DateTime? endDate,
-    City? city,
+    @Default('') String city,
+    double? latitude,
+    double? longitude,
     @Default(false) bool countryError,
     @Default(false) bool cityError,
     @Default(false) bool startDateError,

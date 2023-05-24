@@ -24,6 +24,7 @@ class Destination extends StatelessWidget {
   final bool first;
   final bool last;
   final VoidCallback? onDeleteDestination;
+  final VoidCallback? onEditDestination;
   final void Function(String journeyId)? onDeleteJourney;
   final void Function(String stayId)? onDeleteStay;
 
@@ -37,6 +38,7 @@ class Destination extends StatelessWidget {
     this.onDeleteJourney,
     this.onDeleteStay,
     this.onDeleteDestination,
+    this.onEditDestination,
   }) : super(key: key);
 
   @override
@@ -101,6 +103,13 @@ class Destination extends StatelessWidget {
                 flex: 8,
                 child: Row(
                   children: [
+                    if (editing && onEditDestination != null) ...[
+                      GestureDetector(
+                        onTap: onEditDestination,
+                        child: const Icon(Icons.edit_outlined),
+                      ),
+                      8.0.horizontalSpace,
+                    ],
                     if (editing && onDeleteDestination != null) ...[
                       GestureDetector(
                         onTap: () => confirm(

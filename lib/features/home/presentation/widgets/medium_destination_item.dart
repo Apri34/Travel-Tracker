@@ -9,6 +9,7 @@ class MediumDestinationItem extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
   final VoidCallback? onDelete;
+  final bool editing;
 
   const MediumDestinationItem({
     Key? key,
@@ -17,6 +18,7 @@ class MediumDestinationItem extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.onDelete,
+    this.editing = false,
   }) : super(key: key);
 
   @override
@@ -48,6 +50,14 @@ class MediumDestinationItem extends StatelessWidget {
               flex: 8,
               child: Row(
                 children: [
+                  if (editing) ...[
+                    const Icon(
+                      Icons.edit_outlined,
+                      size: 16.0,
+                      color: Colors.white,
+                    ),
+                    8.0.horizontalSpace,
+                  ],
                   if (onDelete != null) ...[
                     GestureDetector(
                       onTap: onDelete,

@@ -48,6 +48,9 @@ class HomeScreen extends AppCubitScreen<HomeCubit, HomeState> {
                       onDeleteStay: (stayDocId) => context
                           .read<HomeCubit>()
                           .deleteStay(state.destinations[index].id, stayDocId),
+                      onEditDestination: () => context.router.push(
+                          AddDestinationRoute(
+                              destination: state.destinations[index])),
                     );
                   },
                 )
@@ -67,7 +70,7 @@ class HomeScreen extends AppCubitScreen<HomeCubit, HomeState> {
                       AppPrimaryButton(
                         label: S.of(context).addDestination,
                         onPressed: () =>
-                            context.router.push(const AddDestinationRoute()),
+                            context.router.push(AddDestinationRoute()),
                       ),
                     ],
                   ),

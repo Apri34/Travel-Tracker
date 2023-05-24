@@ -63,6 +63,7 @@ class _AppTextFieldState extends State<AppTextField>
     focusNode.addListener(() {
       updateHint();
     });
+    updateHint();
     super.initState();
   }
 
