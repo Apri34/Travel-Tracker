@@ -5,6 +5,7 @@ part of 'add_journey_cubit.dart';
 class AddJourneyState with _$AddJourneyState {
   const factory AddJourneyState({
     String? destinationDocId,
+    String? journeyDocId,
     JourneyType? journeyType,
     @Default('') String comment,
     DateTime? startDate,

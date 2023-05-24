@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_trackr/core/presentation/widgets/app_date_picker_field.dart';
@@ -8,6 +9,7 @@ import 'package:travel_trackr/core/utils/spacing.dart';
 import 'package:travel_trackr/features/destination/presentation/cubit/add_stay/add_stay_cubit.dart';
 
 import '../../../../core/data/entities/destination_entity/destination_entity.dart';
+import '../../../../core/data/entities/stay_entity/stay_entity.dart';
 import '../../../../core/l10n/generated/l10n.dart';
 import '../../../../core/presentation/app_cubit_screen.dart';
 import '../../../../core/presentation/widgets/show_if.dart';
@@ -16,16 +18,18 @@ import '../../../../core/presentation/widgets/show_if.dart';
 class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
   final String destinationDocId;
   final String country;
+  final QueryDocumentSnapshot<StayEntity>? stay;
 
   const AddStayScreen({
     super.key,
     required this.destinationDocId,
     required this.country,
+    this.stay,
   });
 
   @override
   void init(AddStayCubit bloc) {
-    bloc.init(destinationDocId, country);
+    bloc.init(destinationDocId, country, stay);
   }
 
   @override
@@ -72,6 +76,7 @@ class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
                       error: state.zipError,
                       enabled: !state.saving,
                       onChanged: context.read<AddStayCubit>().setZip,
+                      controller: context.read<AddStayCubit>().zipController,
                     ),
                   ),
                   25.0.horizontalSpace,
@@ -81,6 +86,7 @@ class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
                       error: state.cityError,
                       enabled: !state.saving,
                       onChanged: context.read<AddStayCubit>().setCity,
+                      controller: context.read<AddStayCubit>().cityController,
                     ),
                   ),
                 ],
@@ -91,6 +97,7 @@ class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
                 error: state.addressError,
                 enabled: !state.saving,
                 onChanged: context.read<AddStayCubit>().setAddress,
+                controller: context.read<AddStayCubit>().addressController,
               ),
               25.0.verticalSpace,
               AppDatePickerField(
@@ -99,6 +106,7 @@ class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
                 lastDate: state.endDate,
                 initialDate: state.startDate ?? state.endDate ?? DateTime.now(),
                 enabled: !state.saving,
+                controller: context.read<AddStayCubit>().startDateController,
               ),
               ShowIf(
                 show: state.startDate != null,
@@ -113,6 +121,8 @@ class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
                       initialDate:
                           state.endDate ?? state.startDate ?? DateTime.now(),
                       enabled: !state.saving,
+                      controller:
+                          context.read<AddStayCubit>().endDateController,
                     ),
                   ],
                 ),
@@ -122,6 +132,7 @@ class AddStayScreen extends AppCubitScreen<AddStayCubit, AddStayState> {
                 hint: S.of(context).comment,
                 enabled: !state.saving,
                 onChanged: context.read<AddStayCubit>().setComment,
+                controller: context.read<AddStayCubit>().commentController,
               ),
             ],
           ),

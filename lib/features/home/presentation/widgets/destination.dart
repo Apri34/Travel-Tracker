@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:travel_trackr/core/data/api/firebase/firestore_api.dart';
@@ -26,7 +27,10 @@ class Destination extends StatelessWidget {
   final VoidCallback? onDeleteDestination;
   final VoidCallback? onEditDestination;
   final void Function(String journeyId)? onDeleteJourney;
+  final void Function(QueryDocumentSnapshot<JourneyEntity> journey)?
+      onEditJourney;
   final void Function(String stayId)? onDeleteStay;
+  final void Function(QueryDocumentSnapshot<StayEntity> stay)? onEditStay;
 
   const Destination({
     Key? key,
@@ -39,6 +43,8 @@ class Destination extends StatelessWidget {
     this.onDeleteStay,
     this.onDeleteDestination,
     this.onEditDestination,
+    this.onEditJourney,
+    this.onEditStay,
   }) : super(key: key);
 
   @override
@@ -92,6 +98,8 @@ class Destination extends StatelessWidget {
                 child: AutoSizeText(
                   destination.dateString,
                   style: AppTextTheme.bodySmall,
+                  maxLines: 2,
+                  minFontSize: 0,
                 ),
               ),
               16.0.horizontalSpace,
@@ -152,6 +160,7 @@ class Destination extends StatelessWidget {
                 children: snapshot.docs
                     .map((e) => MediumDestinationItem(
                           icon: Icons.airplanemode_on,
+                          editing: editing,
                           onDelete: editing && onDeleteJourney != null
                               ? () {
                                   confirm(
@@ -166,7 +175,9 @@ class Destination extends StatelessWidget {
                               : null,
                           onTap: editing
                               ? () {
-                                  print("EDIT");
+                                  if (onEditJourney != null) {
+                                    onEditJourney!(e);
+                                  }
                                 }
                               : null,
                           trailing: Text(
@@ -208,6 +219,7 @@ class Destination extends StatelessWidget {
                 children: snapshot.docs
                     .map((e) => MediumDestinationItem(
                           icon: Icons.home,
+                          editing: editing,
                           trailing: Text(
                             e.data().address,
                             style: AppTextTheme.bodySmall,
@@ -224,7 +236,13 @@ class Destination extends StatelessWidget {
                                   );
                                 }
                               : null,
-                          onTap: editing ? () {} : null,
+                          onTap: editing
+                              ? () {
+                                  if (onEditStay != null) {
+                                    onEditStay!(e);
+                                  }
+                                }
+                              : null,
                         ))
                     .toList(),
               ),

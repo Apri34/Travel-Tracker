@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,15 +21,17 @@ import '../../../../core/presentation/widgets/app_date_time_picker_field.dart';
 class AddJourneyScreen
     extends AppCubitScreen<AddJourneyCubit, AddJourneyState> {
   final String destinationDocId;
+  final QueryDocumentSnapshot<JourneyEntity>? journey;
 
   const AddJourneyScreen({
     super.key,
     required this.destinationDocId,
+    this.journey,
   });
 
   @override
   void init(AddJourneyCubit bloc) {
-    bloc.init(destinationDocId);
+    bloc.init(destinationDocId, journey);
   }
 
   @override
@@ -75,6 +78,9 @@ class AddJourneyScreen
                     context.read<AddJourneyCubit>().setJourneyType(type),
                 enabled: !state.saving,
                 error: state.journeyTypeError,
+                startIndex: state.journeyType != null
+                    ? JourneyType.values.indexOf(state.journeyType!)
+                    : null,
               ),
               ShowIf(
                 show: state.journeyType != null,
@@ -93,6 +99,8 @@ class AddJourneyScreen
                                 : airport.city),
                         enabled: !state.saving,
                         error: state.fromError,
+                        controller:
+                            context.read<AddJourneyCubit>().fromController,
                       ),
                       25.0.verticalSpace,
                       AppAirportPickerField(
@@ -104,6 +112,8 @@ class AddJourneyScreen
                                 : airport.city),
                         enabled: !state.saving,
                         error: state.toError,
+                        controller:
+                            context.read<AddJourneyCubit>().toController,
                       ),
                     ] else ...[
                       25.0.verticalSpace,
@@ -113,6 +123,8 @@ class AddJourneyScreen
                             context.read<AddJourneyCubit>().setFrom(city.name),
                         enabled: !state.saving,
                         error: state.fromError,
+                        controller:
+                            context.read<AddJourneyCubit>().fromController,
                       ),
                       25.0.verticalSpace,
                       AppCityPickerField(
@@ -121,6 +133,8 @@ class AddJourneyScreen
                             context.read<AddJourneyCubit>().setTo(city.name),
                         enabled: !state.saving,
                         error: state.toError,
+                        controller:
+                            context.read<AddJourneyCubit>().toController,
                       ),
                     ],
                     25.0.verticalSpace,
@@ -132,6 +146,8 @@ class AddJourneyScreen
                       onDateSelected:
                           context.read<AddJourneyCubit>().setStartDate,
                       enabled: !state.saving,
+                      controller:
+                          context.read<AddJourneyCubit>().startDateController,
                     ),
                     25.0.verticalSpace,
                     AppDateTimePickerField(
@@ -142,12 +158,16 @@ class AddJourneyScreen
                       onDateSelected:
                           context.read<AddJourneyCubit>().setEndDate,
                       enabled: !state.saving,
+                      controller:
+                          context.read<AddJourneyCubit>().endDateController,
                     ),
                     25.0.verticalSpace,
                     AppTextField(
                       hint: S.of(context).comment,
                       onChanged: context.read<AddJourneyCubit>().setComment,
                       enabled: !state.saving,
+                      controller:
+                          context.read<AddJourneyCubit>().commentController,
                     ),
                   ],
                 ),

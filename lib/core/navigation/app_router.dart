@@ -7,6 +7,8 @@ import '../../features/destination/presentation/screens/add_journey_screen.dart'
 import '../../features/destination/presentation/screens/add_stay_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../data/entities/destination_entity/destination_entity.dart';
+import '../data/entities/stay_entity/stay_entity.dart';
+import '../data/entities/journey_entity/journey_entity.dart';
 
 part 'app_router.gr.dart';
 

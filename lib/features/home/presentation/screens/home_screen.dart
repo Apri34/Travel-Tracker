@@ -51,6 +51,19 @@ class HomeScreen extends AppCubitScreen<HomeCubit, HomeState> {
                       onEditDestination: () => context.router.push(
                           AddDestinationRoute(
                               destination: state.destinations[index])),
+                      onEditJourney: (journey) => context.router.push(
+                        AddJourneyRoute(
+                          destinationDocId: state.destinations[index].id,
+                          journey: journey,
+                        ),
+                      ),
+                      onEditStay: (stay) => context.router.push(
+                        AddStayRoute(
+                          destinationDocId: state.destinations[index].id,
+                          stay: stay,
+                          country: state.destinations[index].data().country,
+                        ),
+                      ),
                     );
                   },
                 )

@@ -5,6 +5,7 @@ part of 'add_stay_cubit.dart';
 class AddStayState with _$AddStayState {
   const factory AddStayState({
     String? destinationDocId,
+    String? stayDocId,
     @Default('') String address,
     @Default('') String zip,
     @Default('') String city,
@@ -13,7 +14,7 @@ class AddStayState with _$AddStayState {
     DateTime? endDate,
     double? latitude,
     double? longitude,
-    String? comment,
+    @Default('') String comment,
     StayEntity? stay,
     @Default(false) bool addressError,
     @Default(false) bool zipError,

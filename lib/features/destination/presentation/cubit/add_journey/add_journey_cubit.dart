@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:travel_trackr/core/utils/date_format_utils.dart';
 
 import '../../../../../core/data/api/firebase/firestore_api.dart';
 import '../../../../../core/data/entities/journey_entity/journey_entity.dart';
@@ -13,13 +16,42 @@ part 'add_journey_cubit.freezed.dart';
 @Injectable()
 class AddJourneyCubit extends Cubit<AddJourneyState> {
   final FirestoreApi _api;
+  final TextEditingController commentController = TextEditingController();
+  final TextEditingController startDateController = TextEditingController();
+  final TextEditingController endDateController = TextEditingController();
+  final TextEditingController fromController = TextEditingController();
+  final TextEditingController toController = TextEditingController();
 
   AddJourneyCubit(this._api) : super(const AddJourneyState());
 
-  void init(String destinationDocId) {
+  void init(
+    String destinationDocId,
+    QueryDocumentSnapshot<JourneyEntity>? journey,
+  ) {
     emit(state.copyWith(
       destinationDocId: destinationDocId,
     ));
+    if (journey == null) {
+      return;
+    }
+    emit(state.copyWith(
+      journeyDocId: journey.id,
+      journeyType: journey.data().type,
+      comment: journey.data().comment ?? "",
+      startDate: journey.data().startDate,
+      endDate: journey.data().endDate,
+      from: journey.data().from,
+      to: journey.data().to,
+    ));
+    commentController.text = state.comment;
+    startDateController.text = state.startDate != null
+        ? DateFormatUtils.standardWithTime.format(state.startDate!)
+        : "";
+    endDateController.text = state.endDate != null
+        ? DateFormatUtils.standardWithTime.format(state.endDate!)
+        : "";
+    fromController.text = state.from;
+    toController.text = state.to;
   }
 
   void setJourneyType(JourneyType journeyType) {
@@ -94,7 +126,15 @@ class AddJourneyCubit extends Cubit<AddJourneyState> {
         saving: true,
         savingError: false,
       ));
-      await _api.addJourney(state.destinationDocId!, journey);
+      if (state.journeyDocId == null) {
+        await _api.addJourney(state.destinationDocId!, journey);
+      } else {
+        await _api.updateJourney(
+          state.destinationDocId!,
+          state.journeyDocId!,
+          journey,
+        );
+      }
       emit(state.copyWith(
         savingError: false,
         journey: journey,
