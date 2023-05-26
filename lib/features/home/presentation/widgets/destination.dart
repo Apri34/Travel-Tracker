@@ -84,201 +84,204 @@ class Destination extends StatelessWidget {
             ),
           ),
         ),
-        ExpansionTile(
-          tilePadding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            //vertical: 6.0,
-          ),
-          collapsedIconColor: Colors.white,
-          iconColor: Colors.white,
-          title: Row(
+        Theme(
+          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+          child: ExpansionTile(
+            tilePadding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              //vertical: 6.0,
+            ),
+            collapsedIconColor: Colors.white,
+            iconColor: Colors.white,
+            title: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: AutoSizeText(
+                    destination.dateString,
+                    style: AppTextTheme.bodySmall,
+                    maxLines: 2,
+                    minFontSize: 0,
+                  ),
+                ),
+                16.0.horizontalSpace,
+                const CircularIcon(
+                  icon: Icons.location_on,
+                ),
+                16.0.horizontalSpace,
+                Expanded(
+                  flex: 8,
+                  child: Row(
+                    children: [
+                      if (editing && onEditDestination != null) ...[
+                        GestureDetector(
+                          onTap: onEditDestination,
+                          child: const Icon(Icons.edit_outlined),
+                        ),
+                        8.0.horizontalSpace,
+                      ],
+                      if (editing && onDeleteDestination != null) ...[
+                        GestureDetector(
+                          onTap: () => confirm(
+                            context,
+                            S.of(context).deleteDestinationTitle,
+                            S.of(context).deleteDestinationDescription,
+                            onDeleteDestination!,
+                          ),
+                          child: const Icon(Icons.delete_outline),
+                        ),
+                        8.0.horizontalSpace,
+                      ],
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              destination.city,
+                              style: AppTextTheme.headline2,
+                            ),
+                            Text(
+                              destination.country,
+                              style: AppTextTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             children: [
-              Expanded(
-                flex: 3,
-                child: AutoSizeText(
-                  destination.dateString,
-                  style: AppTextTheme.bodySmall,
-                  maxLines: 2,
-                  minFontSize: 0,
+              2.0.verticalSpace,
+              FirestoreQueryBuilder<JourneyEntity>(
+                query: FirestoreQueries.getJourneysQuery(destinationDocId),
+                builder: (context, snapshot, _) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: snapshot.docs
+                      .map((e) => MediumDestinationItem(
+                            icon: Icons.airplanemode_on,
+                            editing: editing,
+                            onDelete: editing && onDeleteJourney != null
+                                ? () {
+                                    confirm(
+                                      context,
+                                      S.of(context).deleteJourneyTitle,
+                                      S.of(context).deleteJourneyDescription,
+                                      () {
+                                        onDeleteJourney!(e.id);
+                                      },
+                                    );
+                                  }
+                                : null,
+                            onTap: editing
+                                ? () {
+                                    if (onEditJourney != null) {
+                                      onEditJourney!(e);
+                                    }
+                                  }
+                                : null,
+                            trailing: Text(
+                              "${e.data().from} - ${e.data().to}",
+                              style: AppTextTheme.bodySmall,
+                            ),
+                          ))
+                      .toList(),
                 ),
               ),
-              16.0.horizontalSpace,
-              const CircularIcon(
-                icon: Icons.location_on,
+              ShowIf(
+                show: editing,
+                child: MediumDestinationItem(
+                  icon: Icons.airplanemode_on,
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 12,
+                      ),
+                      4.0.horizontalSpace,
+                      Text(
+                        S.of(context).addJourney,
+                        style: AppTextTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                  onTap: () => context.router.push(AddJourneyRoute(
+                    destinationDocId: destinationDocId,
+                  )),
+                ),
               ),
-              16.0.horizontalSpace,
-              Expanded(
-                flex: 8,
-                child: Row(
+              FirestoreQueryBuilder<StayEntity>(
+                query: FirestoreQueries.getStaysQuery(destinationDocId),
+                builder: (context, snapshot, _) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: snapshot.docs
+                      .map((e) => MediumDestinationItem(
+                            icon: Icons.home,
+                            editing: editing,
+                            trailing: Text(
+                              e.data().address,
+                              style: AppTextTheme.bodySmall,
+                            ),
+                            onDelete: editing && onDeleteStay != null
+                                ? () {
+                                    confirm(
+                                      context,
+                                      S.of(context).deleteStayTitle,
+                                      S.of(context).deleteStayDescription,
+                                      () {
+                                        onDeleteStay!(e.id);
+                                      },
+                                    );
+                                  }
+                                : null,
+                            onTap: editing
+                                ? () {
+                                    if (onEditStay != null) {
+                                      onEditStay!(e);
+                                    }
+                                  }
+                                : null,
+                          ))
+                      .toList(),
+                ),
+              ),
+              ShowIf(
+                show: editing,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (editing && onEditDestination != null) ...[
-                      GestureDetector(
-                        onTap: onEditDestination,
-                        child: const Icon(Icons.edit_outlined),
-                      ),
-                      8.0.horizontalSpace,
-                    ],
-                    if (editing && onDeleteDestination != null) ...[
-                      GestureDetector(
-                        onTap: () => confirm(
-                          context,
-                          S.of(context).deleteDestinationTitle,
-                          S.of(context).deleteDestinationDescription,
-                          onDeleteDestination!,
-                        ),
-                        child: const Icon(Icons.delete_outline),
-                      ),
-                      8.0.horizontalSpace,
-                    ],
-                    Expanded(
-                      child: Column(
+                    MediumDestinationItem(
+                      icon: Icons.home,
+                      trailing: Row(
                         mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            destination.city,
-                            style: AppTextTheme.headline2,
+                          const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 12,
                           ),
+                          4.0.horizontalSpace,
                           Text(
-                            destination.country,
+                            S.of(context).addStay,
                             style: AppTextTheme.bodySmall,
                           ),
                         ],
                       ),
+                      onTap: () => context.router.push(AddStayRoute(
+                        destinationDocId: destinationDocId,
+                        country: destination.country,
+                      )),
                     ),
                   ],
                 ),
               ),
+              2.0.verticalSpace,
             ],
           ),
-          children: [
-            2.0.verticalSpace,
-            FirestoreQueryBuilder<JourneyEntity>(
-              query: FirestoreQueries.getJourneysQuery(destinationDocId),
-              builder: (context, snapshot, _) => Column(
-                mainAxisSize: MainAxisSize.min,
-                children: snapshot.docs
-                    .map((e) => MediumDestinationItem(
-                          icon: Icons.airplanemode_on,
-                          editing: editing,
-                          onDelete: editing && onDeleteJourney != null
-                              ? () {
-                                  confirm(
-                                    context,
-                                    S.of(context).deleteJourneyTitle,
-                                    S.of(context).deleteJourneyDescription,
-                                    () {
-                                      onDeleteJourney!(e.id);
-                                    },
-                                  );
-                                }
-                              : null,
-                          onTap: editing
-                              ? () {
-                                  if (onEditJourney != null) {
-                                    onEditJourney!(e);
-                                  }
-                                }
-                              : null,
-                          trailing: Text(
-                            "${e.data().from} - ${e.data().to}",
-                            style: AppTextTheme.bodySmall,
-                          ),
-                        ))
-                    .toList(),
-              ),
-            ),
-            ShowIf(
-              show: editing,
-              child: MediumDestinationItem(
-                icon: Icons.airplanemode_on,
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 12,
-                    ),
-                    4.0.horizontalSpace,
-                    Text(
-                      S.of(context).addJourney,
-                      style: AppTextTheme.bodySmall,
-                    ),
-                  ],
-                ),
-                onTap: () => context.router.push(AddJourneyRoute(
-                  destinationDocId: destinationDocId,
-                )),
-              ),
-            ),
-            FirestoreQueryBuilder<StayEntity>(
-              query: FirestoreQueries.getStaysQuery(destinationDocId),
-              builder: (context, snapshot, _) => Column(
-                mainAxisSize: MainAxisSize.min,
-                children: snapshot.docs
-                    .map((e) => MediumDestinationItem(
-                          icon: Icons.home,
-                          editing: editing,
-                          trailing: Text(
-                            e.data().address,
-                            style: AppTextTheme.bodySmall,
-                          ),
-                          onDelete: editing && onDeleteStay != null
-                              ? () {
-                                  confirm(
-                                    context,
-                                    S.of(context).deleteStayTitle,
-                                    S.of(context).deleteStayDescription,
-                                    () {
-                                      onDeleteStay!(e.id);
-                                    },
-                                  );
-                                }
-                              : null,
-                          onTap: editing
-                              ? () {
-                                  if (onEditStay != null) {
-                                    onEditStay!(e);
-                                  }
-                                }
-                              : null,
-                        ))
-                    .toList(),
-              ),
-            ),
-            ShowIf(
-              show: editing,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  MediumDestinationItem(
-                    icon: Icons.home,
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 12,
-                        ),
-                        4.0.horizontalSpace,
-                        Text(
-                          S.of(context).addStay,
-                          style: AppTextTheme.bodySmall,
-                        ),
-                      ],
-                    ),
-                    onTap: () => context.router.push(AddStayRoute(
-                      destinationDocId: destinationDocId,
-                      country: destination.country,
-                    )),
-                  ),
-                ],
-              ),
-            ),
-            2.0.verticalSpace,
-          ],
         ),
       ],
     );

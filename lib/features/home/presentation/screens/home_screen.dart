@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travel_trackr/core/navigation/app_router.dart';
 import 'package:travel_trackr/core/presentation/app_cubit_screen.dart';
 import 'package:travel_trackr/core/presentation/widgets/rotating_fab.dart';
+import 'package:travel_trackr/core/presentation/widgets/show_if.dart';
 import 'package:travel_trackr/core/theme/app_text_theme.dart';
 import 'package:travel_trackr/core/utils/spacing.dart';
 import 'package:travel_trackr/features/home/presentation/widgets/destination.dart';
@@ -12,6 +13,7 @@ import 'package:travel_trackr/features/home/presentation/widgets/destination.dar
 import '../../../../core/l10n/generated/l10n.dart';
 import '../../../../core/presentation/widgets/app_primary_button.dart';
 import '../cubit/home_cubit.dart';
+import '../widgets/add_destination_item.dart';
 
 @RoutePage()
 class HomeScreen extends AppCubitScreen<HomeCubit, HomeState> {
@@ -30,14 +32,25 @@ class HomeScreen extends AppCubitScreen<HomeCubit, HomeState> {
           builder: (context, state) => state.destinations.isNotEmpty ||
                   !state.loaded
               ? ListView.builder(
-                  itemCount: state.destinations.length,
+                  itemCount: state.destinations.length + 1,
                   itemBuilder: (context, index) {
+                    if (index == state.destinations.length) {
+                      return ShowIf(
+                        show: state.editing,
+                        child: AddDestinationItem(
+                          onAddDestination: () {
+                            context.router.push(AddDestinationRoute());
+                          },
+                        ),
+                      );
+                    }
                     return Destination(
                       destination: state.destinations[index].data(),
                       destinationDocId: state.destinations[index].id,
                       editing: state.editing,
                       first: index == 0,
-                      last: index == state.destinations.length - 1,
+                      last: index == state.destinations.length - 1 &&
+                          !state.editing,
                       onDeleteDestination: () => context
                           .read<HomeCubit>()
                           .deleteDestination(state.destinations[index].id),
