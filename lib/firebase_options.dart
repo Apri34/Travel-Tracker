@@ -51,19 +51,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD7Vsz-RETifIhbvgPeIfkupzx--vPaBGc',
-    appId: '1:136895599453:android:538a88986574a774c20eb4',
+    appId: '1:136895599453:android:dac1b2b9c3f3ef02c20eb4',
     messagingSenderId: '136895599453',
     projectId: 'travel-trackr',
+    databaseURL: 'https://travel-trackr-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'travel-trackr.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAtVnGavq9IqAaBLEN0AXKntRUKi0_n8YI',
-    appId: '1:136895599453:ios:14b51ac7aa02c531c20eb4',
+    appId: '1:136895599453:ios:273e7997119905a1c20eb4',
     messagingSenderId: '136895599453',
     projectId: 'travel-trackr',
+    databaseURL: 'https://travel-trackr-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'travel-trackr.appspot.com',
-    iosClientId: '136895599453-mfs80li9hn37kflip311orqva7qdtlpp.apps.googleusercontent.com',
-    iosBundleId: 'com.app.traveltrackr',
+    iosClientId: '136895599453-3f1nkfrdqoe39nqdm8md970m8parg28d.apps.googleusercontent.com',
+    iosBundleId: 'app.travelTrackr.net',
   );
 }

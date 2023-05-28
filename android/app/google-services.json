@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "136895599453",
+    "firebase_url": "https://travel-trackr-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "travel-trackr",
     "storage_bucket": "travel-trackr.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:136895599453:android:538a88986574a774c20eb4",
+        "mobilesdk_app_id": "1:136895599453:android:dac1b2b9c3f3ef02c20eb4",
         "android_client_info": {
-          "package_name": "com.app.traveltrackr"
+          "package_name": "app.travelTrackr.net"
         }
       },
       "oauth_client": [
