@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "136895599453-3f1nkfrdqoe39nqdm8md970m8parg28d.apps.googleusercontent.com",
+              "client_id": "136895599453-08b20nbrn08h6mpljsbtuubj55evkhb4.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "app.travelTrackr.net"
+                "bundle_id": "app.traveltrackr.net"
               }
             }
           ]
