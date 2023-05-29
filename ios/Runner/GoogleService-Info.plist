@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>136895599453-3f1nkfrdqoe39nqdm8md970m8parg28d.apps.googleusercontent.com</string>
+	<string>136895599453-08b20nbrn08h6mpljsbtuubj55evkhb4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.136895599453-3f1nkfrdqoe39nqdm8md970m8parg28d</string>
+	<string>com.googleusercontent.apps.136895599453-08b20nbrn08h6mpljsbtuubj55evkhb4</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAtVnGavq9IqAaBLEN0AXKntRUKi0_n8YI</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>app.travelTrackr.net</string>
+	<string>app.traveltrackr.net</string>
 	<key>PROJECT_ID</key>
 	<string>travel-trackr</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:136895599453:ios:273e7997119905a1c20eb4</string>
+	<string>1:136895599453:ios:eb814b72070f5549c20eb4</string>
 	<key>DATABASE_URL</key>
 	<string>https://travel-trackr-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>

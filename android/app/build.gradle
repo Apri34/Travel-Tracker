@@ -52,7 +52,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "app.travelTrackr.net"
+        applicationId "app.traveltrackr.net"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

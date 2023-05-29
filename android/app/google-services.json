@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:136895599453:android:dac1b2b9c3f3ef02c20eb4",
+        "mobilesdk_app_id": "1:136895599453:android:68eac7fe51590b09c20eb4",
         "android_client_info": {
-          "package_name": "app.travelTrackr.net"
+          "package_name": "app.traveltrackr.net"
         }
       },
       "oauth_client": [
@@ -32,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "136895599453-lcd8eluhn3m1torg4u5a36p9qil9ophk.apps.googleusercontent.com",
+              "client_id": "136895599453-3f1nkfrdqoe39nqdm8md970m8parg28d.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "app.traveltrackr.net.travelTrackr"
+                "bundle_id": "app.travelTrackr.net"
               }
             }
           ]
